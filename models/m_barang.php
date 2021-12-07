@@ -27,4 +27,10 @@ class Barang
         // mengembalikan data
         return $query;
     }
+
+    public function tambah($nama_brg, $harga_brg, $stok_brg, $gambar_brg)
+    {
+        $db = $this->mysqli->conn;
+        $db->query("INSERT INTO tbl_barang VALUES ('','$nama_brg','$harga_brg','$stok_brg','$gambar_brg')") or die($db->error);
+    }
 }
