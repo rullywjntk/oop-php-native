@@ -39,4 +39,18 @@ class Barang
         $db = $this->mysqli->conn;
         $db->query($sql) or die($db->error);
     }
+
+    public function delete($id)
+    {
+        $db = $this->mysqli->conn;
+        $db->query("DELETE FROM tbl_barang WHERE id_brg = '$id'") or die($db->error);
+    }
+
+    // fungsi dipanggil untuk menutup koneksi
+
+    function __destruct()
+    {
+        $db = $this->mysqli->conn;
+        $db->close();
+    }
 }
