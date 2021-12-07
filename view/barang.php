@@ -22,12 +22,12 @@ $brg = new Barang($connect);
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
                 <tr>
-                    <th>No</th>
-                    <th>Nama Barang</th>
-                    <th>Harga Barang</th>
-                    <th>Stok Barang</th>
-                    <th>Gambar Barang</th>
-                    <th>Opsi</th>
+                    <th class="text-center" width="5px">No</th>
+                    <th class="text-center">Nama Barang</th>
+                    <th class="text-center">Harga Barang</th>
+                    <th class="text-center">Stok Barang</th>
+                    <th class="text-center">Gambar Barang</th>
+                    <th class="text-center">Opsi</th>
                 </tr>
 
                 <?php
@@ -53,7 +53,9 @@ $brg = new Barang($connect);
                             <img src="assets/img/barang/<?php echo $data->gambar_brg; ?>" alt="" width="70px">
                         </td>
                         <td align="center">
-                            <button class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                            <a href="" id="edit_brg" data-toggle="modal" data-target="#edit" data-id="<?php echo $data->id_brg; ?>" data-nama="<?php echo $data->nama_brg; ?>" data-harga="<?php echo $data->harga_brg; ?>" data-stok="<?php echo $data->stok_brg; ?>" data-gambar="<?php echo $data->gambar_brg; ?>">
+                                <button class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                            </a>
                             <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Hapus</button>
                         </td>
                     </tr>
@@ -125,6 +127,85 @@ $brg = new Barang($connect);
                 </div>
             </div>
         </div>
+
+        <!-- modal edit -->
+        <div id="edit" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit Data Barang</h4>
+                    </div>
+
+                    <!-- menggunakan jquery ajax -->
+                    <form id="form" enctype="multipart/form-data">
+                        <div class="modal-body" id="modal-edit">
+                            <div class="form-group">
+                                <label for="nama_brg" class="control-label">Nama Barang*</label>
+                                <input type="hidden" name="id_brg" id="id_brg">
+                                <input type="text" name="nama_brg" class="form-control" id="nama_brg" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="harga_brg" class="control-label">Harga Barang*</label>
+                                <input type="number" name="harga_brg" class="form-control" id="harga_brg" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="stok_brg" class="control-label">Stok Barang*</label>
+                                <input type="number" name="stok_brg" class="form-control" id="stok_brg" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gambar_brg" class="control-label">Gambar Barang*</label>
+                                <div style="padding-bottom: 5px;">
+                                    <img src="" width="80px" id="pict" alt="">
+                                </div>
+                                <input type="file" name="gambar_brg" class="form-control" id="gambar_brg">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success" name="edit" value="Simpan" id="">
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).on("click", "#edit_brg", function() {
+                var idBrg = $(this).data('id');
+                var namaBrg = $(this).data('nama');
+                var hargaBrg = $(this).data('harga');
+                var stokBrg = $(this).data('stok');
+                var gambarBrg = $(this).data('gambar');
+
+                $("#modal-edit #id_brg").val(idBrg);
+
+                $("#modal-edit #nama_brg").val(namaBrg);
+                $("#modal-edit #harga_brg").val(hargaBrg);
+                $("#modal-edit #stok_brg").val(stokBrg);
+                $("#modal-edit #pict").attr("src", "assets/img/barang/" + gambarBrg);
+            })
+
+            // proses edit data
+            $(document).ready(function(e) {
+                $("#form").on("submit", (function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: 'models/m_edit_barang.php',
+                        type: 'POST',
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function(msg) {
+                            $('.table').html(msg);
+                        }
+                    })
+                }))
+            })
+        </script>
 
     </div>
 </div>
