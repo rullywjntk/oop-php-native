@@ -1,3 +1,12 @@
+<?php
+require_once('config/koneksi.php');
+require_once('models/database.php');
+
+$connect = new Database($host, $username, $password, $database);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
