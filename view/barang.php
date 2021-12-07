@@ -15,7 +15,7 @@ if (@$_GET['act'] == '') {
         <div class="col-lg-12">
             <h1>Barang <small>Data Barang</small></h1>
             <ol class="breadcrumb">
-                <li><a href="index.html"><i class="icon-dashboard"></i> Barang</a></li>
+                <li><a href=""><i class="icon-dashboard"></i> Barang</a></li>
             </ol>
         </div>
     </div>
@@ -24,54 +24,58 @@ if (@$_GET['act'] == '') {
         <div class="col-lg-12">
 
             <div class="table-responsive">
-                <table class="table table-bordered table-hover table-striped">
-                    <tr>
-                        <th class="text-center" width="5px">No</th>
-                        <th class="text-center">Nama Barang</th>
-                        <th class="text-center">Harga Barang</th>
-                        <th class="text-center">Stok Barang</th>
-                        <th class="text-center">Gambar Barang</th>
-                        <th class="text-center">Opsi</th>
-                    </tr>
-
-                    <?php
-                    $no = 1;
-
-                    // memanggil method tampil dari object $brg
-                    $tampil = $brg->tampil();
-
-                    // looping data
-                    while ($data = $tampil->fetch_object()) {
-
-                    ?>
-
+                <table class="table table-bordered table-hover table-striped" id="datatables">
+                    <thead>
                         <tr>
-                            <td align="center"><?php echo $no++ . "."; ?></td>
-
-                            <!--  nama_brg sesuai dengan field di database -->
-                            <td><?php echo $data->nama_brg; ?></td>
-                            <td><?php echo $data->harga_brg; ?></td>
-                            <td><?php echo $data->stok_brg; ?></td>
-                            <td align="center">
-                                <img src="assets/img/barang/<?php echo $data->gambar_brg; ?>" alt="" width="70px">
-                            </td>
-                            <td align="center">
-                                <a href="" id="edit_brg" data-toggle="modal" data-target="#edit" data-id="<?php echo $data->id_brg; ?>" data-nama="<?php echo $data->nama_brg; ?>" data-harga="<?php echo $data->harga_brg; ?>" data-stok="<?php echo $data->stok_brg; ?>" data-gambar="<?php echo $data->gambar_brg; ?>">
-                                    <button class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</button>
-                                </a>
-
-                                <a href="?page=barang&act=del&id=<?php echo $data->id_brg; ?>" onclick="return confirm('Anda yakin ingin menghapus item ini?')">
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Hapus</button>
-                                </a>
-                            </td>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th>Harga Barang</th>
+                            <th>Stok Barang</th>
+                            <th>Gambar Barang</th>
+                            <th>Opsi</th>
                         </tr>
+                    </thead>
+                    <tbody>
 
-                    <?php } ?>
+                        <?php
+                        $no = 1;
 
+                        // memanggil method tampil dari object $brg
+                        $tampil = $brg->tampil();
+
+                        // looping data
+                        while ($data = $tampil->fetch_object()) {
+
+                        ?>
+                            <tr>
+                                <td align="center"><?php echo $no++ . "."; ?></td>
+
+                                <!--  nama_brg sesuai dengan field di database -->
+                                <td><?php echo $data->nama_brg; ?></td>
+                                <td><?php echo $data->harga_brg; ?></td>
+                                <td><?php echo $data->stok_brg; ?></td>
+                                <td align="center">
+                                    <img src="assets/img/barang/<?php echo $data->gambar_brg; ?>" alt="" width="70px">
+                                </td>
+                                <td align="center">
+                                    <a href="" id="edit_brg" data-toggle="modal" data-target="#edit" data-id="<?php echo $data->id_brg; ?>" data-nama="<?php echo $data->nama_brg; ?>" data-harga="<?php echo $data->harga_brg; ?>" data-stok="<?php echo $data->stok_brg; ?>" data-gambar="<?php echo $data->gambar_brg; ?>">
+                                        <button class="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</button>
+                                    </a>
+
+                                    <a href="?page=barang&act=del&id=<?php echo $data->id_brg; ?>" onclick="return confirm('Anda yakin ingin menghapus item ini?')">
+                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Hapus</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
                 </table>
             </div>
 
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#tambah"><i class="fa fa-plus"></i> Tambah Data</button>
+            <a href="./report/export_excel_barang.php" target="blank">
+                <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Export Excel</button>
+            </a>
 
             <!-- modal tambah -->
             <div id="tambah" class="modal fade" role="dialog">
@@ -133,6 +137,7 @@ if (@$_GET['act'] == '') {
                     </div>
                 </div>
             </div>
+            <!-- end modal tambah -->
 
             <!-- modal edit -->
             <div id="edit" class="modal fade" role="dialog">
@@ -177,6 +182,7 @@ if (@$_GET['act'] == '') {
                     </div>
                 </div>
             </div>
+
             <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
             <script type="text/javascript">
                 $(document).on("click", "#edit_brg", function() {

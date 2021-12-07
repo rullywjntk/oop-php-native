@@ -18,13 +18,15 @@ $connect = new Database($host, $username, $password, $database);
     <meta name="author" content="">
 
     <title>Home - OOP</title>
-
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Add custom CSS here -->
     <link href="assets/css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="assets/DataTables-1.11.3/css/datatables.min.css">
+
 </head>
 
 <body>
@@ -90,6 +92,14 @@ $connect = new Database($host, $username, $password, $database);
     <!-- JavaScript -->
     <script src="assets/js/jquery-1.10.2.js"></script>
     <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/DataTables-1.11.3/js/datatables.min.js"></script>
+
+    <!-- data tables -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#datatables').DataTable();
+        });
+    </script>
 
 </body>
 
